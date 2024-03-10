@@ -1,3 +1,4 @@
+import model.ContactData;
 import model.GroupData;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.By;
@@ -60,31 +61,50 @@ public class TestBase {
         return !isElementPresent(By.name("selected[]"));
     }
 
-
-    protected void openContactPage() {
-        if (!isElementPresent(By.name("new add"))) {
-            driver.findElement(By.linkText("contacts")).click();
-        }
-    }
-
     protected boolean isContactPresent() {
         return !isElementPresent(By.name("selected[]"));
     }
-    protected void createContact() {
-        driver.findElement(By.name("contact_firstname")).click();
-        driver.findElement(By.name("contact_firstname")).sendKeys("Name");
-        driver.findElement(By.name("contact_middlename")).click();
-        driver.findElement(By.name("contact_middlename")).sendKeys("MiddleMame");
-        driver.findElement(By.name("contact_lastname")).click();
-        driver.findElement(By.name("contact_lastname")).sendKeys("Lastname");
-        driver.findElement(By.name("contact_address")).click();
-        driver.findElement(By.name("contact_address")).sendKeys("New Street");
-        driver.findElement(By.name("contact_mobile")).click();
-        driver.findElement(By.name("contact_mobile")).sendKeys("+71111111111");
-        driver.findElement(By.name("contact_email")).click();
-        driver.findElement(By.name("contact_email")).sendKeys("test@test.test");
+
+    protected void createContact(ContactData contactData) {
+        driver.findElement(By.linkText("add new")).click();
+        driver.findElement(By.name("firstname")).click();
+        driver.findElement(By.name("firstname")).sendKeys(contactData.firstName());
+        driver.findElement(By.name("middlename")).click();
+        driver.findElement(By.name("middlename")).sendKeys(contactData.middleName());
+        driver.findElement(By.name("lastname")).click();
+        driver.findElement(By.name("lastname")).sendKeys(contactData.lastName());
+        driver.findElement(By.name("nickname")).click();
+        driver.findElement(By.name("nickname")).sendKeys(contactData.nickname());
+        driver.findElement(By.name("title")).click();
+        driver.findElement(By.name("title")).sendKeys(contactData.title());
+        driver.findElement(By.name("company")).click();
+        driver.findElement(By.name("company")).sendKeys(contactData.company());
+        driver.findElement(By.name("address")).click();
+        driver.findElement(By.name("address")).sendKeys(contactData.address());
+        driver.findElement(By.name("home")).click();
+        driver.findElement(By.name("home")).sendKeys(contactData.homeTelephone());
+        driver.findElement(By.name("mobile")).click();
+        driver.findElement(By.name("mobile")).sendKeys(contactData.mobileTelephone());
+        driver.findElement(By.name("work")).click();
+        driver.findElement(By.name("work")).sendKeys(contactData.workTelephone());
+        driver.findElement(By.name("fax")).click();
+        driver.findElement(By.name("fax")).sendKeys(contactData.faxTelephone());
+        driver.findElement(By.name("email")).click();
+        driver.findElement(By.name("email")).sendKeys(contactData.email());
+        driver.findElement(By.name("email2")).click();
+        driver.findElement(By.name("email2")).sendKeys(contactData.email2());
+        driver.findElement(By.name("email3")).click();
+        driver.findElement(By.name("email3")).sendKeys(contactData.email3());
+        driver.findElement(By.name("homepage")).click();
+        driver.findElement(By.name("homepage")).sendKeys(contactData.homepage());
         driver.findElement(By.name("submit")).click();
         driver.findElement(By.linkText("home page")).click();
-        driver.findElement(By.linkText("Logout")).click();
+    }
+
+    protected static void removeContact() {
+        driver.findElement(By.name("selected[]")).click();
+        driver.findElement(By.cssSelector(".left:nth-child(8) > input")).click();
+        driver.findElement(By.cssSelector("html")).click();
+        //driver.switchTo().alert().accept();
     }
 }
