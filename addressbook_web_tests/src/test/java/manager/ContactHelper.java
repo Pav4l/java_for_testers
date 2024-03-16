@@ -56,4 +56,5 @@ public class ContactHelper extends HelperBase{
         manager.driver.findElement(By.cssSelector("html")).click();
         //manager.driver.switchTo().alert().accept();
     }
+
 }
