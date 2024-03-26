@@ -6,9 +6,7 @@ import org.openqa.selenium.By;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.String.format;
-
-public class GroupHelper extends HelperBase{
+public class GroupHelper extends HelperBase {
 
     public GroupHelper(ApplicationManager manager) {
         super(manager);
@@ -53,11 +51,9 @@ public class GroupHelper extends HelperBase{
         click(By.name("new"));
     }
 
-
     private void removeSelectedGroups() {
         click(By.name("delete"));
     }
-
 
     private void returnToGroupsPage() {
         click(By.linkText("group page"));
@@ -94,7 +90,7 @@ public class GroupHelper extends HelperBase{
 
     private void selectAllGroups() {
         var checkboxes = manager.driver.findElements(By.name("selected[]"));
-        for (var checkbox : checkboxes){
+        for (var checkbox : checkboxes) {
             checkbox.click();
         }
     }
@@ -103,7 +99,7 @@ public class GroupHelper extends HelperBase{
         openGroupPage();
         var groups = new ArrayList<GroupData>();
         var spans = manager.driver.findElements(By.cssSelector("span.group"));
-        for (var span : spans){
+        for (var span : spans) {
             var name = span.getText();
             var checkbox = span.findElement(By.name("selected[]"));
             var id = checkbox.getAttribute("value");
