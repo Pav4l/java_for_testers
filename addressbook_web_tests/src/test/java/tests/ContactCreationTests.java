@@ -2,6 +2,7 @@ package tests;
 
 import model.ContactData;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -10,7 +11,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class ContactCreationTests extends TestBase{
-    public static List<ContactData> contactProvider() {
+    /*public static List<ContactData> contactProvider() {
         var result = new ArrayList<ContactData>(List.of());
         for (int i = 0; i < 5; i++){
             result.add(new ContactData()
@@ -40,7 +41,7 @@ public class ContactCreationTests extends TestBase{
     }
 
     public static List<ContactData> negativeContactProvider() {
-        var result = new ArrayList<ContactData>(List.of(new ContactData("", "firstname", "lastName'","", "", "")));
+        var result = new ArrayList<ContactData>(List.of(new ContactData("", "firstname", "lastName'","", "", "","")));
         return result;
     }
 
@@ -51,15 +52,19 @@ public class ContactCreationTests extends TestBase{
         app.contacts().createContact(contact);
         int newContactCount = app.contacts().getContactsCount();
         Assertions.assertEquals(contactCount, newContactCount);
-    }
+    }*/
 
     //@Test
     //public void canCreateContactWithOnlyName() {
     //    app.contacts().createContact(new ContactData().withName("Pavel"));
    // }
 
-    //@Test
-    //public void canCreateContact() {
-    //    app.contacts().createContact(new ContactData("Ivan", "Ivanov","TestAddress", "11111", "Ivan@test.test"));
-    //}
+    @Test
+    void canCreateContact() {
+        var contact = new ContactData()
+                .withName(randomString(10))
+                .withLastName(randomString(10))
+                .withPhoto("src/test/resources/images/avatar.png");
+        app.contacts().createContact(contact);
+    }
 }

@@ -12,21 +12,11 @@ public class ContactHelper extends HelperBase {
         super(manager);
     }
 
-    public void createContact(ContactData contactData) {
-        manager.driver.findElement(By.linkText("add new")).click();
-        manager.driver.findElement(By.name("firstname")).click();
-        manager.driver.findElement(By.name("firstname")).sendKeys(contactData.firstName());
-        manager.driver.findElement(By.name("lastname")).click();
-        manager.driver.findElement(By.name("lastname")).sendKeys(contactData.lastName());
-        manager.driver.findElement(By.name("address")).click();
-        manager.driver.findElement(By.name("address")).sendKeys(contactData.address());
-        manager.driver.findElement(By.name("mobile")).click();
-        manager.driver.findElement(By.name("mobile")).sendKeys(contactData.mobileTelephone());
-        manager.driver.findElement(By.name("email")).click();
-        manager.driver.findElement(By.name("email")).sendKeys(contactData.email());
-        manager.driver.findElement(By.name("email2")).click();
-        manager.driver.findElement(By.name("submit")).click();
-        manager.driver.findElement(By.linkText("home page")).click();
+    public void createContact(ContactData contact) {
+        openAddNewPage();
+        fillContactForm(contact);
+        submitContactCreation();
+        returnHomePage();
     }
 
     public int getContactsCount() {
@@ -34,7 +24,7 @@ public class ContactHelper extends HelperBase {
         return manager.driver.findElements(By.name("selected[]")).size();
     }
 
-    private void openHomePage() {
+    public void openHomePage() {
         click(By.linkText("home"));
     }
 
@@ -100,10 +90,23 @@ public class ContactHelper extends HelperBase {
         type(By.name("address"), contact.address());
         type(By.name("mobile"), contact.mobileTelephone());
         type(By.name("email"), contact.email());
+        attached(By.name("photo"), contact.photo());
     }
 
     private void submitContactModification() {
         click(By.name("update"));
+    }
+
+    public void submitContactCreation() {
+        click(By.name("submit"));
+    }
+
+    public void openAddNewPage() {
+        click(By.linkText("add new"));
+    }
+
+    public void returnHomePage(){
+        click(By.linkText("home page"));
     }
 
 
