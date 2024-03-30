@@ -90,14 +90,14 @@ public class ContactHelper extends HelperBase {
         type(By.name("address"), contact.address());
         type(By.name("mobile"), contact.mobileTelephone());
         type(By.name("email"), contact.email());
-        attached(By.name("photo"), contact.photo());
+        attach(By.name("photo"), contact.photo());
     }
 
     private void submitContactModification() {
         click(By.name("update"));
     }
 
-    public void submitContactCreation() {
+    private void submitContactCreation() {
         click(By.name("submit"));
     }
 
@@ -106,7 +106,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public void returnHomePage(){
-        click(By.linkText("home page"));
+        click(By.linkText("home"));
     }
 
 

@@ -21,7 +21,7 @@ public class HelperBase {
         manager.driver.findElement(locator).sendKeys(text);
     }
 
-    protected void attached(By locator, String file) {
+    protected void attach(By locator, String file) {
         manager.driver.findElement(locator).sendKeys(Paths.get(file).toAbsolutePath().toString());
     }
 }
