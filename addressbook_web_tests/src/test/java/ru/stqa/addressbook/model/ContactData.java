@@ -1,4 +1,4 @@
-package model;
+package ru.stqa.addressbook.model;
 
 public record ContactData(String id, String firstName, String lastName, String address, String mobileTelephone, String email, String photo) {
     public ContactData() {
