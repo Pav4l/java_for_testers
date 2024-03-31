@@ -2,10 +2,13 @@ package ru.stqa.addressbook.generator;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
-import org.junit.jupiter.params.ParameterizedTest;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import ru.stqa.addressbook.common.CommonFunctions;
 import ru.stqa.addressbook.model.GroupData;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Generator {
@@ -23,7 +26,7 @@ public class Generator {
     int count;
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         var generator = new Generator();
         JCommander.newBuilder()
                 .addObject(generator)
@@ -32,7 +35,7 @@ public class Generator {
         generator.run();
     }
 
-    private void run() {
+    private void run() throws IOException {
         var data = generate();
         save(data);
     }
@@ -43,7 +46,7 @@ public class Generator {
         } else if ("contacts".equals(type)){
             return generateContacts();
         } else {
-            throw new IllegalArgumentException("Неизвестный тип данных" + type);
+            throw new IllegalArgumentException("Неизвестный тип данных " + type);
         }
     }
 
@@ -62,8 +65,14 @@ public class Generator {
         return null;
     }
 
-    private void save(Object Data) {
-
+    private void save(Object Data) throws IOException {
+        if ("json".equals(format)) {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.enable(SerializationFeature.INDENT_OUTPUT);
+            mapper.writeValue(new File(output), Data);
+        } else {
+            throw new IllegalArgumentException("Неизвестный формат данных " + format);
+        }
     }
 
 }
