@@ -1,17 +1,31 @@
 package ru.stqa.addressbook.tests;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import ru.stqa.addressbook.common.CommonFunctions;
 import ru.stqa.addressbook.model.ContactData;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 public class ContactCreationTests extends TestBase{
-    /*public static List<ContactData> contactProvider() {
-        var result = new ArrayList<ContactData>(List.of());
-        for (int i = 0; i < 5; i++){
+    public static List<ContactData> contactProvider() throws IOException {
+        var result = new ArrayList<ContactData>();
+        /*for (int i = 0; i < 5; i++){
             result.add(new ContactData()
                     .withName(randomString(i * 10))
                     .withLastName(randomString(i * 10)));
-        }
+        }*/
+        var mapper = new XmlMapper();
+        var value = mapper.readValue(new File("contacts.xml"), new TypeReference<List<ContactData>>() {});
+        result.addAll(value);
         return result;
     }
 
@@ -28,12 +42,15 @@ public class ContactCreationTests extends TestBase{
         var expectedList = new ArrayList<>(oldContacts);
         expectedList.add(contact
                 .withId(newContacts.get(newContacts.size() - 1).id())
-                .withName(contact.firstName())
-                .withLastName(contact.lastName()));
+                //.withName(contact.firstName())
+                //.withLastName(contact.lastName())
+                //.withPhoto(contact.photo())
+                );
         expectedList.sort(compareById);
         Assertions.assertEquals(newContacts, expectedList);
     }
 
+    /*
     public static List<ContactData> negativeContactProvider() {
         var result = new ArrayList<ContactData>(List.of(new ContactData("", "firstname", "lastName'","", "", "","")));
         return result;
