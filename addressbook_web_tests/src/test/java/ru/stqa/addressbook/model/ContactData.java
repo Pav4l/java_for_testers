@@ -30,7 +30,7 @@ public record ContactData(String id, String firstName, String lastName, String a
     }
 
     public ContactData withPhoto(String photo) {
-        return new ContactData(this.id, this.firstName, this.lastName, this.address, this.mobileTelephone, this.email, photo);
+        return new ContactData(this.id, this.firstName, this.lastName, this.address, this.mobileTelephone, this.email, "");
     }
 
     public ContactData withNameLastname(String firstName, String lastName) {

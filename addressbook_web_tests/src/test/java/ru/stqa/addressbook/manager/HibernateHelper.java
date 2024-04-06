@@ -4,7 +4,9 @@ package ru.stqa.addressbook.manager;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
+import ru.stqa.addressbook.manager.hbm.ContactRecord;
 import ru.stqa.addressbook.manager.hbm.GroupRecord;
+import ru.stqa.addressbook.model.ContactData;
 import ru.stqa.addressbook.model.GroupData;
 
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ public class HibernateHelper extends HelperBase{
         super(manager);
         sessionFactory = new Configuration()
                 // .addAnnotatedClass(Book.class)
+                .addAnnotatedClass(ContactRecord.class)
                 .addAnnotatedClass(GroupRecord.class)
                 .setProperty(AvailableSettings.URL, "jdbc:mysql://localhost/addressbook")
                 .setProperty(AvailableSettings.USER, "root")
@@ -51,7 +54,7 @@ public class HibernateHelper extends HelperBase{
         }));
     }
 
-    public long getGroupCount() {
+    public Long getGroupCount() {
         return sessionFactory.fromSession(session -> {
             return session.createQuery("select count (*) from GroupRecord", Long.class).getSingleResult();
         });
@@ -63,5 +66,45 @@ public class HibernateHelper extends HelperBase{
             session.persist(convert(groupData));
             session.getTransaction().commit();
         });
+    }
+
+    public List<ContactData> getContactList() {
+        return convertContactList(sessionFactory.fromSession(session -> {
+            return session.createQuery("from ContactRecord", ContactRecord.class).list();
+        }));
+    }
+
+    static List<ContactData> convertContactList(List<ContactRecord> records) {
+        List<ContactData> result = new ArrayList<>();
+        for (var record : records) {
+            result.add(convert(record));
+        }
+        return result;
+    }
+
+    private static ContactData convert(ContactRecord record) {
+        return new ContactData("" + record.id, record.firstname, record.lastname, record.address, record.mobileTelephone, record.email, "");
+    }
+
+    public long getContactCount() {
+        return (sessionFactory.fromSession(session -> {
+            return session.createQuery("select count (*) from ContactRecord", long.class).getSingleResult();
+        }));
+    }
+
+    public void createContact(ContactData contactData) {
+        sessionFactory.inSession(session -> {
+            session.getTransaction().begin();
+            session.persist(convert(contactData));
+            session.getTransaction().commit();
+        });
+    }
+
+    private static ContactRecord convert(ContactData data) {
+        var id = data.id();
+        if ("".equals(id)) {
+            id = "0";
+        }
+        return new ContactRecord(Integer.parseInt(id), data.firstName(), data.lastName(), data.address(), data.mobileTelephone(), data.email());
     }
 }

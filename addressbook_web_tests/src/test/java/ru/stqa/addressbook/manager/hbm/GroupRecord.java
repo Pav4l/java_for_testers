@@ -23,6 +23,8 @@ public class GroupRecord {
 
     public Date deprecated = new Date();
 
+    //ALTER TABLE group_list MODIFY COLUMN deprecated DATETIME NULL
+
     public GroupRecord(){
     }
 
