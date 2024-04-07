@@ -1,11 +1,9 @@
 package ru.stqa.addressbook.manager.hbm;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "group_list")
@@ -22,8 +20,13 @@ public class GroupRecord {
     public String footer;
 
     public Date deprecated = new Date();
-
     //ALTER TABLE group_list MODIFY COLUMN deprecated DATETIME NULL
+
+    @ManyToMany
+    @JoinTable(name = "address_in_groups",
+            joinColumns = @JoinColumn(name = "group_id"),
+    inverseJoinColumns = @JoinColumn(name = "id"))
+    public List<ContactRecord> contacts;
 
     public GroupRecord(){
     }

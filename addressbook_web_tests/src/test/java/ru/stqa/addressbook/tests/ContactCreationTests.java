@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import ru.stqa.addressbook.common.CommonFunctions;
 import ru.stqa.addressbook.model.ContactData;
 import org.junit.jupiter.api.Test;
+import ru.stqa.addressbook.model.GroupData;
 
 import java.io.File;
 import java.io.IOException;
@@ -77,5 +78,22 @@ public class ContactCreationTests extends TestBase{
                 .withLastName(CommonFunctions.randomString(10))
                 .withPhoto(randomFile("src/test/resources/images"));
         app.contacts().createContact(contact);
+    }
+
+    @Test
+    void canCreateContactInGroup() {
+        var contact = new ContactData()
+                .withName(CommonFunctions.randomString(10))
+                .withLastName(CommonFunctions.randomString(10))
+                .withPhoto(randomFile("src/test/resources/images"));
+        if (app.hbm().getGroupCount() == 0) {
+            app.hbm().createGroup(new GroupData("", "group name", "group header", "group footer"));
+        }
+        var group = app.hbm().getGroupList().get(0);
+
+        var oldRelated = app.hbm().getContactsInGroup(group);
+        app.contacts().createContact(contact, group);
+        var newRelated = app.hbm().getContactsInGroup(group);
+        Assertions.assertEquals(oldRelated.size() + 1, newRelated.size());
     }
 }
