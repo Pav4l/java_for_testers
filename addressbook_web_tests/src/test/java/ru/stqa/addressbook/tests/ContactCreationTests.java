@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 public class ContactCreationTests extends TestBase{
     public static List<ContactData> contactProvider() throws IOException {
@@ -86,14 +87,21 @@ public class ContactCreationTests extends TestBase{
                 .withName(CommonFunctions.randomString(10))
                 .withLastName(CommonFunctions.randomString(10))
                 .withPhoto(randomFile("src/test/resources/images"));
-        if (app.hbm().getGroupCount() == 0) {
-            app.hbm().createGroup(new GroupData("", "group name", "group header", "group footer"));
+        if (app.hbm().getContactCount() == 0) {
+            app.contacts().createContact(contact);
         }
-        var group = app.hbm().getGroupList().get(0);
+        if (app.hbm().getGroupCount() == 0) {
+            app.hbm().createGroup(new GroupData("", "name", "header", "footer"));
+        }
 
+        var group = app.hbm().getGroupList().get(0);
         var oldRelated = app.hbm().getContactsInGroup(group);
-        app.contacts().createContact(contact, group);
+        var oldContacts = app.hbm().getContactList();
+        var rnd = new Random();
+        var index = rnd.nextInt(oldContacts.size());
+        app.contacts().addContactToGroup(oldContacts.get(index));
         var newRelated = app.hbm().getContactsInGroup(group);
         Assertions.assertEquals(oldRelated.size() + 1, newRelated.size());
     }
+
 }
