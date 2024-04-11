@@ -44,16 +44,6 @@ public class ContactHelper extends HelperBase {
         new Select(manager.driver.findElement(By.name("group"))).selectByVisibleText(group.name());
     }
 
-    public void addContactToGroup(ContactData contact) {
-        openHomePage();
-        selectContact(contact);
-        selectGroupForContact();
-    }
-
-    private void selectGroupForContact() {
-        click(By.name("add"));
-    }
-
     private void selectGroup(GroupData group) {
         new Select(manager.driver.findElement(By.name("new_group"))).selectByValue(group.id());
     }
@@ -100,9 +90,9 @@ public class ContactHelper extends HelperBase {
         var tds = manager.driver.findElements(By.name("entry"));
         for (var td : tds) {
             var checkbox = td.findElement(By.className("center")).findElement(By.name("selected[]"));
-            var id = checkbox.getAttribute("value");
             var name = td.findElement(By.cssSelector("td:nth-child(3)")).getText();
             var lastName = td.findElement(By.cssSelector("td:nth-child(2)")).getText();
+            var id = checkbox.getAttribute("value");
             contacts.add(new ContactData().withId(id).withName(name).withLastName(lastName));
         }
         return contacts;
@@ -148,5 +138,19 @@ public class ContactHelper extends HelperBase {
         click(By.linkText("home"));
     }
 
+    public void addContactInGroup(ContactData contact, GroupData group) {
+        openHomePage();
+        selectContact(contact);
+        selectGroupToAddContact(group);
+        addGroup();
+        returnHomePage();
+    }
 
+    private void addGroup() {
+        click(By.name("add"));
+    }
+
+    private void selectGroupToAddContact(GroupData group) {
+        new Select(manager.driver.findElement(By.name("to_group"))).selectByValue(group.id());
+    }
 }
