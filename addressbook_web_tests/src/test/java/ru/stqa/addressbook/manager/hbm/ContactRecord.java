@@ -19,13 +19,11 @@ public class ContactRecord {
 
     public String company="";
     public String address;
+    public String home;
+    public String mobile;
+    public String work;
+    public String phone2;
 
-    @Column(name = "home")
-    public String homeTelephone = "";
-    @Column(name = "mobile")
-    public String mobileTelephone = "";
-    @Column(name = "work")
-    public String workTelephone = "";
     @Column(name = "fax")
     public String faxTelephone = "";
     public String email = "";
@@ -37,12 +35,12 @@ public class ContactRecord {
     public ContactRecord() {
     }
 
-    public ContactRecord(int id, String firstname, String lastname, String address, String mobileTelephone, String email/*, String photo*/) {
+    public ContactRecord(int id, String firstname, String lastname, String address, String mobile, String email/*, String photo*/) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.address = address;
-        this.mobileTelephone = mobileTelephone;
+        this.mobile = mobile;
         this.email = email;
         //this.photo = photo;
     }

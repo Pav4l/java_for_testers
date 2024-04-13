@@ -9,7 +9,6 @@ import ru.stqa.addressbook.manager.hbm.GroupRecord;
 import ru.stqa.addressbook.model.ContactData;
 import ru.stqa.addressbook.model.GroupData;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -76,7 +75,15 @@ public class HibernateHelper extends HelperBase{
     }
 
     private static ContactData convert(ContactRecord record) {
-        return new ContactData("" + record.id, record.firstname, record.lastname, record.address, record.mobileTelephone, record.email, "");
+        //return new ContactData("" + record.id, record.firstname, record.lastname, record.address, record.mobileTelephone, record.email, "", "", "", "", "");
+        return new ContactData().withId("" + record.id)
+                .withName(record.firstname)
+                .withLastName(record.lastname)
+                .withAddress(record.address)
+                .withHome(record.home)
+                .withMobile(record.mobile)
+                .withWork(record.work)
+                .withSecondary(record.phone2);
     }
 
     public long getContactCount() {
