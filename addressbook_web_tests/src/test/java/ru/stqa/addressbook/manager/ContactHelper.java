@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ContactHelper extends HelperBase {
 
@@ -162,6 +164,16 @@ public class ContactHelper extends HelperBase {
                 String.format("//input[@id='%s']/../../td[6]", contact.id()))).getText();
     }
 
+    public String getAddresses(ContactData contact) {
+        return manager.driver.findElement(By.xpath(
+                String.format("//input[@id='%s']/../../td[4]", contact.id()))).getText();
+    }
+
+    public String getEmails(ContactData contact) {
+        return manager.driver.findElement(By.xpath(
+                String.format("//input[@id='%s']/../../td[5]", contact.id()))).getText();
+    }
+
     public Map<String, String> getPhones() {
         var result = new HashMap<String, String>();
         List<WebElement> rows = manager.driver.findElements(By.name("entry"));
@@ -172,4 +184,60 @@ public class ContactHelper extends HelperBase {
         }
         return result;
     }
+
+    public Map<String, String> getAddresses() {
+        var result = new HashMap<String, String>();
+        List<WebElement> rows = manager.driver.findElements(By.name("entry"));
+        for (WebElement row : rows) {
+            var id = row.findElement(By.tagName("input")).getAttribute("id");
+            var addresses = row.findElements(By.tagName("td")).get(3).getText();
+            result.put(id, addresses);
+        }
+        return result;
+    }
+
+    public Map<String, String> getEmails() {
+        var result = new HashMap<String, String>();
+        List<WebElement> rows = manager.driver.findElements(By.name("entry"));
+        for (WebElement row : rows) {
+            var id = row.findElement(By.tagName("input")).getAttribute("id");
+            var emails = row.findElements(By.tagName("td")).get(4).getText();
+            result.put(id, emails);
+        }
+        return result;
+    }
+
+    public String getPhonesModifyPage(ContactData contact) {
+        openHomePage();
+        initContactModification(contact);
+        var home = manager.driver.findElement(By.name("home")).getText();
+        var mobile = manager.driver.findElement(By.name("mobile")).getText();
+        var work = manager.driver.findElement(By.name("work")).getText();
+        var secondary = manager.driver.findElement(By.name("phone2")).getText();
+        openHomePage();
+        return Stream.of(home, mobile, work, secondary).filter(s -> s != null && !"".equals(s))
+                .collect(Collectors.joining("\n"));
+    }
+
+    public String getAddressModifyPage(ContactData contact) {
+        openHomePage();
+        initContactModification(contact);
+        var address = manager.driver.findElement(By.name("address")).getText();
+        openHomePage();
+        return Stream.of(address).filter(s -> s != null && !"".equals(s))
+                .collect(Collectors.joining("\n"));
+    }
+
+    public String getEmailsModifyPage(ContactData contact) {
+        openHomePage();
+        initContactModification(contact);
+        var email = manager.driver.findElement(By.name("email")).getText();
+        var email2 = manager.driver.findElement(By.name("email2")).getText();
+        var email3 = manager.driver.findElement(By.name("email3")).getText();
+        openHomePage();
+        return Stream.of(email, email2, email3).filter(s -> s != null && !"".equals(s))
+                .collect(Collectors.joining("\n"));
+    }
+
+
 }

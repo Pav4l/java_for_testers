@@ -26,9 +26,9 @@ public class ContactRecord {
 
     @Column(name = "fax")
     public String faxTelephone = "";
-    public String email = "";
-    public String email2 = "";
-    public String email3 = "";
+    public String email;
+    public String email2;
+    public String email3;
     public String homepage = "";
     //public String photo = "";
 
