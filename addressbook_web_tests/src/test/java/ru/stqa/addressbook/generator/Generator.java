@@ -74,7 +74,11 @@ public class Generator {
         return generateData(() ->
                         new ContactData()
                                 .withName(CommonFunctions.randomString(10))
-                                .withLastName(CommonFunctions.randomString(10)));
+                                .withLastName(CommonFunctions.randomString(10))
+                                .withAddress(CommonFunctions.randomString(10))
+                                .withMobile(CommonFunctions.randomString(10))
+                                .withEmail(CommonFunctions.randomString(10))
+                                .withPhoto(randomFile("src/test/resources/images")));
     }
 
     private void save(Object data) throws IOException {

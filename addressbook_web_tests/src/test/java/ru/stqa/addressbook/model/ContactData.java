@@ -9,7 +9,8 @@ public record ContactData(String id,
                           String photo,
                           String home,
                           String mobile,
-                          String work, String secondary) {
+                          String work,
+                          String secondary) {
     public ContactData() {
         this("", "", "", "", "", "","", "", "", "", "");
     }
@@ -43,19 +44,19 @@ public record ContactData(String id,
     }
 
     public ContactData withHome(String home) {
-        return new ContactData(this.id, this.firstName, this.lastName, this.address, this.mobileTelephone, this.email, this.photo, "", this.mobile, this.work, this.secondary);
+        return new ContactData(this.id, this.firstName, this.lastName, this.address, this.mobileTelephone, this.email, this.photo, home, this.mobile, this.work, this.secondary);
     }
 
     public ContactData withMobile(String mobile) {
-        return new ContactData(this.id, this.firstName, this.lastName, this.address, this.mobileTelephone, this.email, this.photo, this.home, "", this.work, this.secondary);
+        return new ContactData(this.id, this.firstName, this.lastName, this.address, this.mobileTelephone, this.email, this.photo, this.home, mobile, this.work, this.secondary);
     }
 
     public ContactData withWork(String work) {
-        return new ContactData(this.id, this.firstName, this.lastName, this.address, this.mobileTelephone, this.email, this.photo, this.home, this.mobile, "", this.secondary);
+        return new ContactData(this.id, this.firstName, this.lastName, this.address, this.mobileTelephone, this.email, this.photo, this.home, this.mobile, work, this.secondary);
     }
 
     public ContactData withSecondary(String secondary) {
-        return new ContactData(this.id, this.firstName, this.lastName, this.address, this.mobileTelephone, this.email, this.photo, this.home, this.mobile, this.work, "");
+        return new ContactData(this.id, this.firstName, this.lastName, this.address, this.mobileTelephone, this.email, this.photo, this.home, this.mobile, this.work, secondary);
     }
 
     public ContactData withNameLastname(String firstName, String lastName) {
