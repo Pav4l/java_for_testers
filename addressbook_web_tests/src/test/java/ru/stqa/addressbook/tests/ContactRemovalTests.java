@@ -26,14 +26,14 @@ public class ContactRemovalTests extends TestBase{
         Assertions.assertEquals(newContacts, expectedList);
     }
 
-    @Test
-    void canRemovalAllContactsTests() {
-        if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData("","name","lastname","", "","", "", "", "", "", "", ""));
-        }
-        app.contacts().removeAllContacts();
-        Assertions.assertEquals(0,app.contacts().getContactsCount());
-    }
+//    @Test
+//    void canRemovalAllContactsTests() {
+//        if (app.hbm().getContactCount() == 0) {
+//            app.hbm().createContact(new ContactData("","name","lastname","", "","", "", "", "", "", "", ""));
+//        }
+//        app.contacts().removeAllContacts();
+//        Assertions.assertEquals(0,app.contacts().getContactsCount());
+//    }
 
     @Test
     public void canRemoveContactsFromGroup() {

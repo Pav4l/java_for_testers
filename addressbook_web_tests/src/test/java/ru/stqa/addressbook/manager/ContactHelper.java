@@ -70,6 +70,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public void removeAllContacts() {
+        openHomePage();
         selectAllContacts();
         removeSelectedContact();
     }
@@ -79,10 +80,15 @@ public class ContactHelper extends HelperBase {
     }
 
     private void selectAllContacts() {
-        var checkboxes = manager.driver.findElements(By.name("selected[]"));
-        for (var checkbox : checkboxes) {
-            checkbox.click();
-        }
+//        List<WebElement> checkboxes = manager.driver.findElements(By.xpath("//input[@name='selected[]']"));
+//        for (WebElement checkbox : checkboxes) {
+//            checkbox.click();
+//        }
+//        var checkboxes = manager.driver.findElements(By.name("selected[]"));
+//        for (var checkbox : checkboxes) {
+//            checkbox.click();
+//        }
+        manager.driver.findElement(By.id("MassCB")).click();
     }
 
     private void removeSelectedContact() {

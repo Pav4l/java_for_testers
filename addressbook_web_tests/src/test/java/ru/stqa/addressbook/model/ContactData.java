@@ -1,5 +1,8 @@
 package ru.stqa.addressbook.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+//@JsonIgnoreProperties(ignoreUnknown = true)
 public record ContactData(String id,
                           String firstName,
                           String lastName,

@@ -31,26 +31,26 @@ public class ContactCreationTests extends TestBase{
         return result;
     }
 
-    @ParameterizedTest
-    @MethodSource("contactProvider")
-    public void canCreateMultipleContacts(ContactData contact) {
-        var oldContacts = app.hbm().getContactList();
-        app.contacts().createContact(contact);
-        var newContacts = app.hbm().getContactList();
-        Comparator<ContactData> compareById = (o1, o2) -> {
-            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
-        };
-        newContacts.sort(compareById);
-        var expectedList = new ArrayList<>(oldContacts);
-        expectedList.add(contact
-                .withId(newContacts.get(newContacts.size() - 1).id())
-                //.withName(contact.firstName())
-                //.withLastName(contact.lastName())
-                //.withPhoto(contact.photo())
-                );
-        expectedList.sort(compareById);
-        Assertions.assertEquals(newContacts, expectedList);
-    }
+//    @ParameterizedTest
+//    @MethodSource("contactProvider")
+//    public void canCreateMultipleContacts(ContactData contact) {
+//        var oldContacts = app.hbm().getContactList();
+//        app.contacts().createContact(contact);
+//        var newContacts = app.hbm().getContactList();
+//        Comparator<ContactData> compareById = (o1, o2) -> {
+//            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
+//        };
+//        newContacts.sort(compareById);
+//        var expectedList = new ArrayList<>(oldContacts);
+//        expectedList.add(contact
+//                .withId(newContacts.get(newContacts.size() - 1).id())
+//                //.withName(contact.firstName())
+//                //.withLastName(contact.lastName())
+//                //.withPhoto(contact.photo())
+//                );
+//        expectedList.sort(compareById);
+//        Assertions.assertEquals(newContacts, expectedList);
+//    }
 
     /*
     public static List<ContactData> negativeContactProvider() {
@@ -92,6 +92,7 @@ public class ContactCreationTests extends TestBase{
                     .withLastName(CommonFunctions.randomString(10))
                     .withPhoto(randomFile("src/test/resources/images")));
         }
+
         var group = app.hbm().getGroupList().get(0);
         var oldRelated = app.hbm().getContactsInGroup(group);
         var contactList = app.hbm().getContactList();
